@@ -1,0 +1,7 @@
+# Revisão obrigatória em áreas críticas.
+# Substitua pelos handles reais da equipe antes de habilitar as proteções.
+
+/supabase/            @c1c3ru
+/src/lib/auth/        @c1c3ru
+/src/lib/security/    @c1c3ru
+/.github/             @c1c3ru

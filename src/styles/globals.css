@@ -1,0 +1,28 @@
+/* Base de estilos do SEJA. Tokens em src/config/theme.ts. */
+
+:root {
+  --verde-institucional: #1b7e3c;
+  --verde-escuro: #0f5228;
+  --cinza-fundo: #f4f5f7;
+  --cinza-borda: #d9dce1;
+  --texto-primario: #1f2933;
+  --texto-secundario: #5a6572;
+  --erro: #c0271a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--cinza-fundo);
+  color: var(--texto-primario);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}

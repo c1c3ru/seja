@@ -20,7 +20,7 @@
     "db:migrate": "supabase db push"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.7.0",
+    "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.58.0",
     "next": "^16.0.0",
     "react": "^19.2.0",

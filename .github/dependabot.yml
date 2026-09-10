@@ -3,38 +3,38 @@ version: 2
 updates:
   # Dependências da aplicação: Next.js, React, Supabase, Zod, ESLint,
   # Vitest etc. (todas declaradas em package.json).
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "America/Fortaleza"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'America/Fortaleza'
     open-pull-requests-limit: 10
     groups:
       dev-dependencies:
-        dependency-type: "development"
+        dependency-type: 'development'
     labels:
-      - "dependencies"
-      - "npm"
+      - 'dependencies'
+      - 'npm'
     commit-message:
-      prefix: "chore(deps)"
-      prefix-development: "chore(deps-dev)"
-      include: "scope"
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+      include: 'scope'
 
   # Actions usadas nos workflows (checkout, setup-node, codeql-action...).
   # Manter atualizadas reduz risco de supply chain no próprio CI/CD.
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "America/Fortaleza"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'America/Fortaleza'
     open-pull-requests-limit: 10
     labels:
-      - "dependencies"
-      - "github-actions"
+      - 'dependencies'
+      - 'github-actions'
     commit-message:
-      prefix: "chore(deps)"
-      include: "scope"
+      prefix: 'chore(deps)'
+      include: 'scope'

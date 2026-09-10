@@ -3,28 +3,28 @@
 Este guia complementa o que já foi automatizado via CLI/PR e lista **apenas
 os passos que exigem clique na interface do GitHub** — nenhuma IA ou CLI
 consegue alterar `Settings` de um repositório em nome do usuário. Execute-os
-como dono/administrador do repositório (`c1c3ru/seja`, permissão *Admin*).
+como dono/administrador do repositório (`c1c3ru/seja`, permissão _Admin_).
 
 ## O que já está automatizado (neste repositório, via arquivos versionados)
 
-| Recurso                  | Arquivo                             | Status         |
-| ------------------------- | ------------------------------------ | -------------- |
-| Code scanning (CodeQL)    | `.github/workflows/codeql.yml`       | ✅ Criado       |
-| Dependabot version updates| `.github/dependabot.yml`             | ✅ Criado       |
-| Inspeção contínua (Sonar) | `.github/workflows/sonarqube.yml` + `sonar-project.properties` | ✅ Criado (requer `SONAR_TOKEN`, ver §4) |
-| Revisão obrigatória       | `.github/CODEOWNERS`                 | ✅ Já existia   |
-| Secret scanning           | *(configuração na UI, ver §1)*       | ⬜ Manual       |
-| Push protection           | *(configuração na UI, ver §1)*       | ⬜ Manual       |
-| Dependabot alerts/updates | *(toggle na UI, ver §2)*             | ⬜ Manual       |
-| Branch protection rules   | *(configuração na UI, ver §3)*       | ⬜ Manual       |
-| Copilot code review       | *(configuração na UI, ver §5)*       | ⬜ Manual       |
+| Recurso                    | Arquivo                                                        | Status                                   |
+| -------------------------- | -------------------------------------------------------------- | ---------------------------------------- |
+| Code scanning (CodeQL)     | `.github/workflows/codeql.yml`                                 | ✅ Criado                                |
+| Dependabot version updates | `.github/dependabot.yml`                                       | ✅ Criado                                |
+| Inspeção contínua (Sonar)  | `.github/workflows/sonarqube.yml` + `sonar-project.properties` | ✅ Criado (requer `SONAR_TOKEN`, ver §4) |
+| Revisão obrigatória        | `.github/CODEOWNERS`                                           | ✅ Já existia                            |
+| Secret scanning            | _(configuração na UI, ver §1)_                                 | ⬜ Manual                                |
+| Push protection            | _(configuração na UI, ver §1)_                                 | ⬜ Manual                                |
+| Dependabot alerts/updates  | _(toggle na UI, ver §2)_                                       | ⬜ Manual                                |
+| Branch protection rules    | _(configuração na UI, ver §3)_                                 | ⬜ Manual                                |
+| Copilot code review        | _(configuração na UI, ver §5)_                                 | ⬜ Manual                                |
 
 > O repositório é **público**, então Secret scanning, Push protection e
 > CodeQL/code scanning são **gratuitos** (não exigem licença GitHub Advanced
 > Security paga). Se um dia o repositório virar privado, esses três recursos
 > passam a exigir um assento de GHAS/Code Security/Secret Protection.
 
-> ⚠️ O *default branch* configurado no GitHub para este repositório é
+> ⚠️ O _default branch_ configurado no GitHub para este repositório é
 > **`producao`** (confirmado via API). É essa mesmo a branch que deve
 > receber PRs por padrão? Se não for a intenção, ajuste primeiro em
 > `Settings → General → Default branch` — as instruções de proteção abaixo
@@ -109,9 +109,10 @@ URL direta: `https://github.com/c1c3ru/seja/settings/branches`
 7. **Create** / **Save changes**
 
 > Depois de configurar o SonarQube (`§4`) e confirmar que ele já rodou com
-> sucesso em pelo menos um PR, volte aqui e adicione o check `SonarQube
-> Cloud` à lista de status obrigatórios do passo 3 — antes disso o job
-> fica *skipped* (não bloqueia, mas também não inspeciona nada de fato).
+> sucesso em pelo menos um PR, volte aqui e adicione o check
+> `SonarQube Cloud` à lista de status obrigatórios do passo 3 — antes
+> disso o job fica _skipped_ (não bloqueia, mas também não inspeciona
+> nada de fato).
 
 ### 3.2 Demais branches de longa duração
 
@@ -163,8 +164,8 @@ export default defineConfig({
 
 ```yaml
 # .github/workflows/ci.yml — novo passo no job "qualidade", após "Testes"
-      - name: Cobertura de testes
-        run: npm run test:coverage
+- name: Cobertura de testes
+  run: npm run test:coverage
 ```
 
 O `vitest` sai com código de erro quando a cobertura fica abaixo de
@@ -178,7 +179,7 @@ cobertura (que podem conter trechos de código) para serviços de terceiros
 ## 4. SonarQube — Continuous Inspection
 
 O CodeQL (§ acima) foca em vulnerabilidades de segurança. O SonarQube
-complementa com *code smells*, duplicação, complexidade ciclomática e
+complementa com _code smells_, duplicação, complexidade ciclomática e
 confiabilidade geral — a "Continuous Inspection" que dá nome ao projeto
 [SonarSource/sonarqube](https://github.com/SonarSource/sonarqube).
 
@@ -199,12 +200,12 @@ abaixo ser feito.
    para baterem exatamente com o que foi criado.
 4. Em **My Account → Security**, gere um token (**Project Analysis
    Token** é suficiente).
-5. No GitHub, cadastre o secret: `Settings → Secrets and variables →
-   Actions → New repository secret`, nome `SONAR_TOKEN`, valor o token do
-   passo 4.
+5. No GitHub, cadastre o secret em `Settings` → `Secrets and variables` →
+   `Actions` → **New repository secret**, com nome `SONAR_TOKEN` e valor
+   o token do passo 4.
    URL direta: `https://github.com/c1c3ru/seja/settings/secrets/actions`
 6. Abra ou atualize um PR — o job "SonarQube Cloud" deixa de aparecer
-   como *skipped* e passa a comentar o resultado direto no PR, além de
+   como _skipped_ e passa a comentar o resultado direto no PR, além de
    publicar o dashboard completo em sonarcloud.io.
 7. Reaproveita o relatório de cobertura do Vitest (`coverage/lcov.info`,
    ver § 3.3) se ele existir; se ainda não existir, o SonarQube só
@@ -241,8 +242,7 @@ ou Enterprise) atribuído a quem for aceitar a sugestão:
 - [ ] Push protection ativo (`§1`)
 - [ ] Dependabot alerts + security updates ativos (`§2`)
 - [ ] Branch protection em `producao`: aprovação + Code Owners + checks
-      (`Lint, tipos e testes`, `Build`, `Analisar (javascript-typescript)`)
-      + conversas resolvidas (`§3.1`)
+      (`Lint, tipos e testes`, `Build`, `Analisar (javascript-typescript)`) + conversas resolvidas (`§3.1`)
 - [ ] Mesma proteção replicada em `desenvolvimento` (e `homologacao`
       quando existir) (`§3.2`)
 - [ ] Cobertura mínima de testes configurada no CI e exigida via o check

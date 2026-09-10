@@ -55,14 +55,14 @@ referência — os demais módulos seguem exatamente esse formato.
 
 ## Mapa de épicos → código
 
-| Épico | Onde                                                                  |
-| ----- | --------------------------------------------------------------------- |
-| 0 — Login | `src/app/(auth)/login`, `src/infra/integrations/sigaa`             |
-| 1 — Shell e RBAC | `src/app/(dashboard)/layout.tsx`, `src/config/navigation.ts`, `src/lib/auth/rbac.ts` |
-| 2 — Buscadores | `src/app/(dashboard)/estagios`, `.../jovem-aprendiz`            |
-| 3 — Banco de Talentos | `src/app/(dashboard)/banco-curriculos`                   |
-| 4 — Relatórios e seguros | `.../relatorios-*`, `.../seguros-ifce`                |
-| 5 — Concedentes | `src/app/(dashboard)/concedentes/**`                           |
-| 6 — Parâmetros | `src/app/(dashboard)/parametros/**`                             |
-| 7 — Intervenção | `.../gerenciamento-estagios`, `.../gerenciamento-jovem-aprendiz` |
-| 8 e 9 — Filtros de relatório | `src/components/forms`, `src/core/application/dto` |
+| Épico                        | Onde                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------ |
+| 0 — Login                    | `src/app/(auth)/login`, `src/infra/integrations/sigaa`                               |
+| 1 — Shell e RBAC             | `src/app/(dashboard)/layout.tsx`, `src/config/navigation.ts`, `src/lib/auth/rbac.ts` |
+| 2 — Buscadores               | `src/app/(dashboard)/estagios`, `.../jovem-aprendiz`                                 |
+| 3 — Banco de Talentos        | `src/app/(dashboard)/banco-curriculos`                                               |
+| 4 — Relatórios e seguros     | `.../relatorios-*`, `.../seguros-ifce`                                               |
+| 5 — Concedentes              | `src/app/(dashboard)/concedentes/**`                                                 |
+| 6 — Parâmetros               | `src/app/(dashboard)/parametros/**`                                                  |
+| 7 — Intervenção              | `.../gerenciamento-estagios`, `.../gerenciamento-jovem-aprendiz`                     |
+| 8 e 9 — Filtros de relatório | `src/components/forms`, `src/core/application/dto`                                   |

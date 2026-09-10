@@ -30,6 +30,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Gerar tipos do Next.js (rotas, layouts)
+        run: npx next typegen
+
       - name: Checagem de tipos
         run: npm run typecheck
 

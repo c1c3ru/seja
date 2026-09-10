@@ -73,3 +73,34 @@ anterior — na mesma transação da alteração.
 Currículos e vínculos contêm dados pessoais de discentes. Não exporte para
 serviços externos, não logue CPF ou e-mail, e limite as consultas ao escopo
 necessário do perfil.
+
+## 10. Segurança automatizada no CI/CD
+
+Além da revisão manual dos itens acima, duas ferramentas gratuitas rodam
+automaticamente em todo `push` e Pull Request para as branches `dev`,
+`homologacao` e `producao`.
+
+### Dependabot — SCA (Software Composition Analysis)
+
+Configurado em `.github/dependabot.yml`. Varre semanalmente o ecossistema
+`npm` na raiz do projeto e abre PR automático ao encontrar uma vulnerabilidade
+conhecida (CVE) ou versão desatualizada, com atenção especial aos pacotes
+centrais do produto — `react`, `next` e `@supabase/*`. O PR gerado passa pelo
+mesmo CI de qualidade (`lint`, `typecheck`, `test`, `build`) antes de poder
+ser mesclado.
+
+### Gitleaks — prevenção de vazamento de segredos
+
+Configurado em `.github/workflows/gitleaks.yml`. Varre o histórico de commits
+de todo `push` e Pull Request em busca de credenciais expostas por engano no
+código-fonte, em particular:
+
+- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` e, sobretudo,
+  `SUPABASE_SERVICE_ROLE_KEY` (bypassa o RLS — ver seção 5);
+- `SIGAA_CLIENT_ID` / `SIGAA_CLIENT_SECRET` da integração de autenticação de
+  discentes e servidores (ver `src/infra/integrations/sigaa/`);
+- `SESSION_SECRET` e demais tokens listados em `.env.example`.
+
+Se o Gitleaks encontrar um padrão de segredo, o job falha e bloqueia o merge.
+A chave exposta deve ser removida do histórico e rotacionada imediatamente
+(ver seção 5, "Rotação de chaves").

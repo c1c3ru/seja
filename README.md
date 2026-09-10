@@ -59,13 +59,13 @@ docs/                       arquitetura, segurança, branching, roadmap
 
 ## Perfis de acesso
 
-| Perfil                  | Alcance                                              |
-| ----------------------- | ---------------------------------------------------- |
-| DEEE                    | Gestão institucional ampla, inclusive parâmetros      |
-| Apoio de Coordenação    | Validação de documentos e convênios; sem exclusões    |
-| Coordenação de Estágio  | Aprovação, mudança de situação e exclusão de vínculos |
-| Professor Orientador    | Leitura dos discentes que orienta                     |
-| Empresa (externo)       | Somente solicitação de convênio                       |
+| Perfil                 | Alcance                                               |
+| ---------------------- | ----------------------------------------------------- |
+| DEEE                   | Gestão institucional ampla, inclusive parâmetros      |
+| Apoio de Coordenação   | Validação de documentos e convênios; sem exclusões    |
+| Coordenação de Estágio | Aprovação, mudança de situação e exclusão de vínculos |
+| Professor Orientador   | Leitura dos discentes que orienta                     |
+| Empresa (externo)      | Somente solicitação de convênio                       |
 
 A matriz completa está em [`src/lib/auth/rbac.ts`](src/lib/auth/rbac.ts).
 

@@ -11,12 +11,13 @@ como dono/administrador do repositório (`c1c3ru/seja`, permissão *Admin*).
 | ------------------------- | ------------------------------------ | -------------- |
 | Code scanning (CodeQL)    | `.github/workflows/codeql.yml`       | ✅ Criado       |
 | Dependabot version updates| `.github/dependabot.yml`             | ✅ Criado       |
+| Inspeção contínua (Sonar) | `.github/workflows/sonarqube.yml` + `sonar-project.properties` | ✅ Criado (requer `SONAR_TOKEN`, ver §4) |
 | Revisão obrigatória       | `.github/CODEOWNERS`                 | ✅ Já existia   |
 | Secret scanning           | *(configuração na UI, ver §1)*       | ⬜ Manual       |
 | Push protection           | *(configuração na UI, ver §1)*       | ⬜ Manual       |
 | Dependabot alerts/updates | *(toggle na UI, ver §2)*             | ⬜ Manual       |
 | Branch protection rules   | *(configuração na UI, ver §3)*       | ⬜ Manual       |
-| Copilot code review       | *(configuração na UI, ver §4)*       | ⬜ Manual       |
+| Copilot code review       | *(configuração na UI, ver §5)*       | ⬜ Manual       |
 
 > O repositório é **público**, então Secret scanning, Push protection e
 > CodeQL/code scanning são **gratuitos** (não exigem licença GitHub Advanced
@@ -107,6 +108,11 @@ URL direta: `https://github.com/c1c3ru/seja/settings/branches`
 6. Deixe **Allow force pushes** e **Allow deletions** desmarcados
 7. **Create** / **Save changes**
 
+> Depois de configurar o SonarQube (`§4`) e confirmar que ele já rodou com
+> sucesso em pelo menos um PR, volte aqui e adicione o check `SonarQube
+> Cloud` à lista de status obrigatórios do passo 3 — antes disso o job
+> fica *skipped* (não bloqueia, mas também não inspeciona nada de fato).
+
 ### 3.2 Demais branches de longa duração
 
 Repita o mesmo procedimento para `desenvolvimento` e, quando ela for
@@ -169,7 +175,47 @@ proposital: o projeto lida com dados pessoais de discentes (ver
 cobertura (que podem conter trechos de código) para serviços de terceiros
 é a opção mais conservadora.
 
-## 4. Correções com Copilot (aceitar sugestões em 1 clique)
+## 4. SonarQube — Continuous Inspection
+
+O CodeQL (§ acima) foca em vulnerabilidades de segurança. O SonarQube
+complementa com *code smells*, duplicação, complexidade ciclomática e
+confiabilidade geral — a "Continuous Inspection" que dá nome ao projeto
+[SonarSource/sonarqube](https://github.com/SonarSource/sonarqube).
+
+O workflow `.github/workflows/sonarqube.yml` e o arquivo
+`sonar-project.properties` já estão no repositório, mas o job de análise
+fica **pulado (skipped)** — não falha, apenas não roda — até o secret
+`SONAR_TOKEN` existir. Nenhum PR quebra por causa disso antes do passo 5
+abaixo ser feito.
+
+1. Crie uma conta em [sonarcloud.io](https://sonarcloud.io) (gratuito para
+   repositórios públicos) com **Login with GitHub** e autorize o app
+   SonarQube Cloud a acessar `c1c3ru/seja`.
+2. Em **+ → Analyze new project**, importe `c1c3ru/seja`. Anote a
+   **Organization Key** e a **Project Key** que a SonarQube Cloud gerar.
+3. Se esses valores vierem diferentes de `c1c3ru` (organização) e
+   `c1c3ru_seja` (projeto), edite `sonar.organization` e
+   `sonar.projectKey` em `sonar-project.properties` (raiz do repositório)
+   para baterem exatamente com o que foi criado.
+4. Em **My Account → Security**, gere um token (**Project Analysis
+   Token** é suficiente).
+5. No GitHub, cadastre o secret: `Settings → Secrets and variables →
+   Actions → New repository secret`, nome `SONAR_TOKEN`, valor o token do
+   passo 4.
+   URL direta: `https://github.com/c1c3ru/seja/settings/secrets/actions`
+6. Abra ou atualize um PR — o job "SonarQube Cloud" deixa de aparecer
+   como *skipped* e passa a comentar o resultado direto no PR, além de
+   publicar o dashboard completo em sonarcloud.io.
+7. Reaproveita o relatório de cobertura do Vitest (`coverage/lcov.info`,
+   ver § 3.3) se ele existir; se ainda não existir, o SonarQube só
+   analisa sem métrica de cobertura — não é um erro.
+
+> Usa **SonarQube Server** auto-hospedado em vez de SonarQube Cloud? Em
+> `sonarqube.yml`, adicione `SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}`
+> ao `env:` do passo "Análise SonarQube" e cadastre a URL em
+> `Settings → Secrets and variables → Actions → Variables`.
+
+## 5. Correções com Copilot (aceitar sugestões em 1 clique)
 
 Dois fluxos distintos, ambos exigem assento Copilot (Individual, Business
 ou Enterprise) atribuído a quem for aceitar a sugestão:
@@ -189,7 +235,7 @@ ou Enterprise) atribuído a quem for aceitar a sugestão:
    **Add suggestion to batch** em cada uma e finalize com **Commit
    suggestions**.
 
-## 5. Checklist final
+## 6. Checklist final
 
 - [ ] Secret scanning ativo (`§1`)
 - [ ] Push protection ativo (`§1`)
@@ -201,4 +247,6 @@ ou Enterprise) atribuído a quem for aceitar a sugestão:
       quando existir) (`§3.2`)
 - [ ] Cobertura mínima de testes configurada no CI e exigida via o check
       `Lint, tipos e testes` (`§3.3`)
-- [ ] Copilot code review testado em pelo menos 1 PR (`§4`)
+- [ ] Projeto importado no SonarQube Cloud e secret `SONAR_TOKEN`
+      cadastrado (`§4`)
+- [ ] Copilot code review testado em pelo menos 1 PR (`§5`)

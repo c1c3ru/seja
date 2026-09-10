@@ -23,6 +23,15 @@ updates:
       supabase:
         patterns:
           - '@supabase/*'
+    ignore:
+      # eslint-config-next ainda quebra com a nova API interna do ESLint 10
+      # ("scopeManager.addGlobals is not a function") — ver PR #4.
+      - dependency-name: 'eslint'
+        versions: ['>=10.0.0']
+      # typescript-eslint ainda não suporta o TypeScript 7 (reescrita em Go) —
+      # ver PR #5 e typescript-eslint/typescript-eslint#10940.
+      - dependency-name: 'typescript'
+        versions: ['>=7.0.0']
 
   # Actions usadas nos workflows (checkout, setup-node, codeql-action,
   # gitleaks-action...). Manter atualizadas reduz risco de supply chain

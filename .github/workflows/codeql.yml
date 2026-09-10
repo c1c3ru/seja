@@ -1,0 +1,61 @@
+name: CodeQL
+
+# Analise estática de segurança (SAST) da stack principal do projeto
+# (Next.js / React / TypeScript). Roda em todo push e pull request para as
+# branches de longa duração, além de uma varredura semanal agendada.
+
+on:
+  push:
+    branches: [desenvolvimento, homologacao, producao]
+  pull_request:
+    branches: [desenvolvimento, homologacao, producao]
+  schedule:
+    # Segunda-feira, 03h30 UTC — captura vulnerabilidades publicadas
+    # depois do último commit em branches que ficaram paradas.
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analisar (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # JS/TS cobre Next.js, React, Server Actions e Route Handlers.
+          # build-mode "none": o extractor do CodeQL para JS/TS não precisa
+          # compilar o projeto.
+          - language: javascript-typescript
+            build-mode: none
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inicializar CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # security-and-quality cobre tanto vulnerabilidades de segurança
+          # quanto antipadrões/manutenibilidade de código.
+          queries: security-and-quality
+
+      - name: Autobuild
+        if: matrix.build-mode == 'autobuild'
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Executar análise CodeQL
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

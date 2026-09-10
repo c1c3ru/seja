@@ -97,8 +97,6 @@ código-fonte, em particular:
 
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` e, sobretudo,
   `SUPABASE_SERVICE_ROLE_KEY` (bypassa o RLS — ver seção 5);
-- `SIGAA_CLIENT_ID` / `SIGAA_CLIENT_SECRET` da integração de autenticação de
-  discentes e servidores (ver `src/infra/integrations/sigaa/`);
 - `SESSION_SECRET` e demais tokens listados em `.env.example`.
 
 Se o Gitleaks encontrar um padrão de segredo, o job falha e bloqueia o merge.

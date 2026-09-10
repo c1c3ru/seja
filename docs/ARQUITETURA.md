@@ -16,8 +16,8 @@ src/core/application  Serviços e casos de uso. Regras de negócio. Sem HTTP,
 src/core/domain       Entidades, value objects, erros e as INTERFACES de
         │             repositório (portas). Zero dependência externa.
         ▲
-src/infra/**          Adapters: implementações Supabase das portas, mappers,
-                      integração com o SIGAA. Depende do domínio, nunca o
+src/infra/**          Adapters: implementações Supabase das portas, mappers
+                      e integrações externas. Depende do domínio, nunca o
                       contrário.
 ```
 
@@ -57,7 +57,7 @@ referência — os demais módulos seguem exatamente esse formato.
 
 | Épico                        | Onde                                                                                 |
 | ---------------------------- | ------------------------------------------------------------------------------------ |
-| 0 — Login                    | `src/app/(auth)/login`, `src/infra/integrations/sigaa`                               |
+| 0 — Login                    | `src/app/(auth)/login`, `src/app/api/auth`                                           |
 | 1 — Shell e RBAC             | `src/app/(dashboard)/layout.tsx`, `src/config/navigation.ts`, `src/lib/auth/rbac.ts` |
 | 2 — Buscadores               | `src/app/(dashboard)/estagios`, `.../jovem-aprendiz`                                 |
 | 3 — Banco de Talentos        | `src/app/(dashboard)/banco-curriculos`                                               |

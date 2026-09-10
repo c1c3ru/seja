@@ -7,7 +7,7 @@ Cada épico vira uma milestone no GitHub; cada task, uma issue com branch
 
 - [ ] Layout particionado (topo verde IFCE, base cinza) + logomarca e títulos
 - [ ] Card de credenciais com toggle de visibilidade da senha
-- [ ] Checkbox "Sou empresa": desvia do SIGAA para o fluxo de concedentes
+- [ ] Checkbox "Sou empresa": desvia do login institucional para o fluxo de concedentes
 - [ ] Submissão com tratamento de credencial inválida e trava de duplo clique
 
 ## Épico 1 — Estrutura base, sidebar e RBAC
@@ -67,7 +67,7 @@ Cada épico vira uma milestone no GitHub; cada task, uma issue com branch
 
 ## Transversal
 
-- [ ] Integração de autenticação com o SIGAA
+- [ ] Autenticação própria (usuário/senha), sem integração externa com o SIGAA (ver BLOCO 7)
 - [ ] Modelagem completa do schema + RLS por tabela
 - [ ] Exportação de relatórios (CSV/XLSX/PDF)
 - [ ] Testes de autorização por perfil (matriz RBAC)

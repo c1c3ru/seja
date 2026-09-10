@@ -37,7 +37,7 @@ npm run db:types    # regenera src/types/database.types.ts do schema
 ```
 src/
 ├── app/                    Apresentação (App Router)
-│   ├── (auth)/login/       Épico 0 — login SIGAA + bifurcação de empresa
+│   ├── (auth)/login/       Épico 0 — login institucional + bifurcação de empresa
 │   ├── (dashboard)/        Épicos 1–9 — shell autenticado
 │   └── api/                Route Handlers
 ├── core/
@@ -46,8 +46,7 @@ src/
 ├── infra/
 │   ├── supabase/           Clientes browser / server / admin
 │   ├── repositories/       Adapters Supabase das portas
-│   ├── mappers/            Linha do banco → entidade de domínio
-│   └── integrations/sigaa/ Autenticação institucional
+│   └── mappers/            Linha do banco → entidade de domínio
 ├── components/             ui, layout, forms, data-table, shared
 ├── lib/                    auth (RBAC), validation, security, errors, utils
 ├── config/                 env, navegação da sidebar, tema institucional

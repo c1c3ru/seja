@@ -2,35 +2,35 @@ version: 2
 
 updates:
   # Dependências da aplicação: Next.js, React, Supabase, Zod, ESLint,
-  # Vitest etc. (todas declaradas em package.json).
+  # Vitest etc. (todas declaradas em package.json). Agrupadas para reduzir
+  # o número de PRs quando várias libs do mesmo ecossistema saem juntas.
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'monday'
-      time: '06:00'
-      timezone: 'America/Fortaleza'
     open-pull-requests-limit: 10
     groups:
-      dev-dependencies:
-        dependency-type: 'development'
-    labels:
-      - 'dependencies'
-      - 'npm'
-    commit-message:
-      prefix: 'chore(deps)'
-      prefix-development: 'chore(deps-dev)'
-      include: 'scope'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+      nextjs:
+        patterns:
+          - 'next'
+          - 'eslint-config-next'
+      supabase:
+        patterns:
+          - '@supabase/*'
 
-  # Actions usadas nos workflows (checkout, setup-node, codeql-action...).
-  # Manter atualizadas reduz risco de supply chain no próprio CI/CD.
+  # Actions usadas nos workflows (checkout, setup-node, codeql-action,
+  # gitleaks-action...). Manter atualizadas reduz risco de supply chain
+  # no próprio CI/CD.
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'monday'
-      time: '06:00'
-      timezone: 'America/Fortaleza'
     open-pull-requests-limit: 10
     labels:
       - 'dependencies'

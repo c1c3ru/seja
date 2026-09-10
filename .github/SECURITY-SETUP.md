@@ -11,6 +11,7 @@ como dono/administrador do repositório (`c1c3ru/seja`, permissão _Admin_).
 | -------------------------- | -------------------------------------------------------------- | ---------------------------------------- |
 | Code scanning (CodeQL)     | `.github/workflows/codeql.yml`                                 | ✅ Criado                                |
 | Dependabot version updates | `.github/dependabot.yml`                                       | ✅ Criado                                |
+| Secret scanning (Gitleaks) | `.github/workflows/gitleaks.yml` (PR #1)                       | ✅ Já ativo                              |
 | Inspeção contínua (Sonar)  | `.github/workflows/sonarqube.yml` + `sonar-project.properties` | ✅ Criado (requer `SONAR_TOKEN`, ver §4) |
 | Revisão obrigatória        | `.github/CODEOWNERS`                                           | ✅ Já existia                            |
 | Secret scanning            | _(configuração na UI, ver §1)_                                 | ⬜ Manual                                |
@@ -38,6 +39,12 @@ como dono/administrador do repositório (`c1c3ru/seja`, permissão _Admin_).
 Caminho: `Settings → Code security and analysis` (aba **Security** do
 repositório → **Configure**, dependendo da versão da UI).
 URL direta: `https://github.com/c1c3ru/seja/settings/security_analysis`
+
+> O Gitleaks (`.github/workflows/gitleaks.yml`, ver `docs/SEGURANCA.md`
+> §10) já roda em todo push/PR e bloqueia o merge se achar um segredo —
+> mas só depois do commit existir. Os passos abaixo adicionam a segunda
+> camada, nativa do GitHub, que também recusa o `git push` (Push
+> protection) antes de o segredo sair da máquina do desenvolvedor.
 
 1. Em **Secret scanning**, clique **Enable**.
 2. Em **Push protection**, clique **Enable** — isso bloqueia no `git push`

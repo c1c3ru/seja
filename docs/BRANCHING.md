@@ -39,6 +39,9 @@ Em `Settings → Branches`, para `homologacao` e `producao`:
 - bloquear force-push e deleção;
 - em `producao`, exigir que a branch esteja atualizada antes do merge.
 
+Passo a passo completo (incluindo o check do CodeQL e a cobertura mínima
+de testes) em [`.github/SECURITY-SETUP.md`](../.github/SECURITY-SETUP.md).
+
 ## Migrações de banco
 
 Migração acompanha o código na mesma PR. A ordem de aplicação segue a das

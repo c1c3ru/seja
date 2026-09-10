@@ -1,0 +1,61 @@
+name: SonarQube
+
+# Inspeção contínua de qualidade e segurança de código (SonarSource:
+# https://github.com/SonarSource/sonarqube — "Continuous Inspection").
+# Complementa o CodeQL (vulnerabilidades) com code smells, duplicação,
+# complexidade e confiabilidade.
+#
+# Pré-requisito manual: criar o projeto em sonarcloud.io e cadastrar o
+# secret SONAR_TOKEN — ver .github/SECURITY-SETUP.md, seção 4. Enquanto o
+# secret não existir, o job de análise fica "skipped" (não falha o PR).
+
+on:
+  push:
+    branches: [desenvolvimento, homologacao, producao]
+  pull_request:
+    branches: [desenvolvimento, homologacao, producao]
+  workflow_dispatch:
+
+concurrency:
+  group: sonarqube-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar-configuracao:
+    name: Verificar SONAR_TOKEN
+    runs-on: ubuntu-latest
+    outputs:
+      configurado: ${{ steps.checar.outputs.configurado }}
+    steps:
+      - name: Checar se o secret existe
+        id: checar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -n "$SONAR_TOKEN" ]; then
+            echo "configurado=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configurado=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::SONAR_TOKEN nao configurado — analise do SonarQube pulada. Veja .github/SECURITY-SETUP.md (secao 4)."
+          fi
+
+  analisar:
+    name: SonarQube Cloud
+    needs: verificar-configuracao
+    if: needs.verificar-configuracao.outputs.configurado == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Historico completo: melhora a precisao da analise incremental
+          # de PR (novo codigo, blame) feita pelo SonarQube.
+          fetch-depth: 0
+
+      - name: Análise SonarQube
+        # SonarQube Cloud não precisa de SONAR_HOST_URL. Usando um
+        # SonarQube Server próprio? Adicione SONAR_HOST_URL aqui, apontando
+        # para o servidor, e cadastre-o como Actions Variable.
+        uses: SonarSource/sonarqube-scan-action@v8
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

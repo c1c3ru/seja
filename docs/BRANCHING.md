@@ -2,11 +2,11 @@
 
 O SEJA usa três branches de longa duração, cada uma vinculada a um ambiente.
 
-| Branch        | Ambiente     | `NEXT_PUBLIC_APP_ENV` | Deploy    | Banco               |
-| ------------- | ------------ | --------------------- | --------- | ------------------- |
-| `dev`         | Desenvolvimento | `development`      | automático | Supabase (dev)      |
-| `homologacao` | Homologação  | `homologacao`         | automático | Supabase (homolog.) |
-| `producao`    | Produção     | `production`          | manual    | Supabase (prod)     |
+| Branch        | Ambiente        | `NEXT_PUBLIC_APP_ENV` | Deploy     | Banco               |
+| ------------- | --------------- | --------------------- | ---------- | ------------------- |
+| `dev`         | Desenvolvimento | `development`         | automático | Supabase (dev)      |
+| `homologacao` | Homologação     | `homologacao`         | automático | Supabase (homolog.) |
+| `producao`    | Produção        | `production`          | manual     | Supabase (prod)     |
 
 > Os nomes das branches são escritos sem acento (`homologacao`, `producao`).
 > Acentos em refs Git funcionam, mas quebram em ferramentas de CI, URLs de

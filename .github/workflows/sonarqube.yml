@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Historico completo: melhora a precisao da analise incremental
           # de PR (novo codigo, blame) feita pelo SonarQube.
